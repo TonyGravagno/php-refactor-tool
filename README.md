@@ -11,8 +11,8 @@ You can join this discord server to discuss about current/future features more e
 [![](https://dcbadge.vercel.app/api/server/NYMutPhV)](https://discord.gg/NYMutPhV)
 
 ## Description
-- Php refactor tool help users refactor their codes easily and safely
 
+- PHP Refactor Tool helps users to refactor their code easily and safely
 - The extension is made for object-oriented programming (OOP) in PHP
 
 ## Features
@@ -27,22 +27,30 @@ Rename Class
 Rename Method
 ![Rename Method](https://i.imgur.com/BIEGjDQ.gif)
 
-## Work in progress features
-- When moving/renaming files, change the namespace and its usages
-
 ## Installation
 
 - Install dependency extension `PHP Intelephense`
+- All extensions with the same functionality should be disabled to obtain the best result.
 
-- All the extensions with same functionalities should be disabled to obtain the best result.
+### Configuration (new in 0.6.1)
+
+`phpRefactorTool.fileNamePattern`
+
+- `symbol` (default) : On change of class to `Foo_Bar`, set file name to `Foo_Bar.php`
+- `wordpress` : On change of class to `My_Plugin_FooBar`, set file name to `my-plugin-foo-bar.php`
 
 ## Usage
 
-Use key `F2` or right click and choose `Rename Symbol` on the symbol you want to rename.
+Use key `F2` or right-click and choose `Rename Symbol` on the symbol you want to rename.
+
+## Work in progress features
+- When moving/renaming files, change the namespace and its usages
 
 ## Known Issues
 
-Not yet. If you have any problems please let me know, I'll fix it as soon as possible.
+Does not (yet) modify require/require_once statements. You must do this manually.
+
+If you have any problems please let me know, I'll try to fix it as time permits.
 
 ## Run tests
 

@@ -1,4 +1,3 @@
-// Place your settings in this file to overwrite default and user settings.
 {
     "files.exclude": {
         "out": false // set this to true to hide the "out" folder with the compiled JS files
@@ -18,4 +17,7 @@
             "backgroundColor": "rgba(0,0,0,.2)"
         }
     ],
+    // Avoid format on save to ensure clean PR from third-party devs
+    "editor.formatOnSave": false
+
 }

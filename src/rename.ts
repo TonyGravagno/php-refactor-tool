@@ -7,7 +7,8 @@ import {
 	SymbolKind, 
 	LocationLink, 
 	Location, 
-	Uri, DocumentSymbol, Range, window
+	Uri, DocumentSymbol, Range, window,
+    workspace
 } from 'vscode';
 import { getDocumentSymbols, getReferences, getSymbol } from './api';
 import { isNone } from 'fp-ts/lib/Option';
@@ -111,9 +112,13 @@ export class PhpRenameProvider implements RenameProvider {
 	}
 
 	private renameFile(edit: WorkspaceEdit, definition: LocationLink, newName: string): void {
+		const preferredName = this.getPhpFileNameForSymbol(
+			newName,
+			definition.targetUri
+		);
 		const newPath = path.format({
 			dir: path.dirname(definition.targetUri.path),
-			name: newName,
+			name: preferredName,
 			ext: '.php'
 		});
 		edit.renameFile(definition.targetUri, definition.targetUri.with({ path: newPath }));				
@@ -169,5 +174,43 @@ export class PhpRenameProvider implements RenameProvider {
 			}	
 		}
 		return false;
+	}
+
+	/**
+	 * Computes a new file name for a PHP symbol
+	 *
+	 * @param   {string}  newName   Name of symbol ("kind" = class, interface, module)
+	 * @param   {Uri}     resource  URI for current file to determine scope for preference
+	 *
+	 * @return  {string}            New filename, same as newName or kebab cased
+	 */
+	private getPhpFileNameForSymbol(newName: string, resource: Uri): string {
+	const config = workspace.getConfiguration("phpRefactorTool", resource);
+	const pattern = config.get<"symbol" | "wordpress">(
+		"fileNamePattern",
+		"symbol"
+	);
+
+	if (pattern === "wordpress") {
+		// Take only the trailing segment after namespace, if any
+		const base = newName.split("\\").pop() ?? newName;
+
+		// WordPress-style: my-plugin-foo.php from My_Plugin_Foo or MyPluginFoo
+		const kebab = base
+		// split camelCase / StudlyCaps: MyPluginFoo -> My-Plugin-Foo
+		.replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+		// underscores to hyphens: My_Plugin_Foo -> My-Plugin-Foo
+		.replace(/_/g, "-")
+		// strip anything weird
+		.replace(/[^a-zA-Z0-9-]/g, "")
+		.toLowerCase()
+		// normalize multi-hyphens
+		.replace(/-+/g, "-");
+
+		return kebab;
+	}
+
+	// default: match the class name exactly
+	return newName;
 	}
 }

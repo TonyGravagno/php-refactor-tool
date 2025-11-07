@@ -7,7 +7,7 @@
 		"url": "https://github.com/st-pham/php-refactor-tool.git"
 	},
 	"icon": "images/icon.png",
-	"version": "0.6.0",
+	"version": "0.6.1",
 	"publisher": "st-pham",
 	"author": {
 		"name": "Son Tung PHAM",
@@ -38,7 +38,21 @@
 					".php"
 				]
 			}
-		]
+		],
+		"configuration": {
+			"title": "PHP Refactor Tool",
+			"properties": {
+				"phpRefactorTool.fileNamePattern": {
+					"type": "string",
+					"enum": [
+						"symbol",
+						"wordpress"
+					],
+					"default": "symbol",
+					"description": "How to compute the PHP file name when renaming a symbol. 'symbol' -> Symbol_Name.php, 'wordpress' -> symbol-name.php."
+				}
+			}
+		}
 	},
 	"main": "./out/src/extension.js",
 	"scripts": {

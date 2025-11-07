@@ -8,7 +8,6 @@
 ## 0.2.6
 
 - Refactor
-
 - Update Docs
 
 ## 0.2.8
@@ -26,7 +25,6 @@
 ## 0.4.0
 
 - Add functional tests
-
 - Update README
 
 ## 0.4.1
@@ -36,5 +34,10 @@
 ## 0.4.2
 
 - Refactor
-
 - Add more tests
+
+## ... 0.6.0 ?
+
+## 0.6.1
+
+- Add settings option phpRefactorTool.fileNamePattern - see README
